@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+.Python
+env/
+venv/
+ENV/
+VENV/
+*.env
+*.venv
+*.egg-info/
+.eggs/
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Django
+db.sqlite3
+/staticfiles/
+media/
+*.log
+
+# VSCode
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Entorno/credenciales
+.env
+.env.*
+
+# Otros
+*.bak
+*.swp
