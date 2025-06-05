@@ -1,3 +1,9 @@
 from django.contrib import admin
+from .models import ConversacionAnalizada
 
 # Register your models here.
+@admin.register(ConversacionAnalizada)
+class ConversacionAnalizadaAdmin(admin.ModelAdmin):
+    list_display = ('id', 'sentimiento', 'intencion_compra', 'creado_en')
+    search_fields = ('mensajes',)
+    readonly_fields = ('creado_en',)
