@@ -22,6 +22,7 @@ class AnalizarChatView(APIView):
                 mensajes=mensajes,
                 sentimiento=resultado.get("sentimiento", "Neutral"),
                 intencion_compra=resultado.get("intencion_compra", "Media"),
+                urgencia=resultado.get("urgencia", "Media")
             )
             salida_serializer = ConversacionAnalizadaSerializer(conversacion)
             return Response(salida_serializer.data, status=201)
