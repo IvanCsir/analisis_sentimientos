@@ -2,7 +2,6 @@ import os
 import requests
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-print("GEMINI_API_KEY:", GEMINI_API_KEY)  # Para depuración, eliminar en producción
 GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
 
 def analizar_conversacion_con_gemini(mensajes):
