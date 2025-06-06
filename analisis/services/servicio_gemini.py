@@ -13,15 +13,6 @@ def analizar_conversacion_con_gemini(mensajes):
     for i, m in enumerate(mensajes, 1):
         historial += f"Mensaje {i}: {m}\n"
 
-    # prompt = (
-    #     "Analiza la siguiente conversación entre un posible cliente y un hotel para saber "
-    #     "Responde SOLO en formato JSON con estos campos:\n"
-    #     "sentimiento: (Positivo, Negativo o Neutral)\n"
-    #     "intencion_compra: (Alta, Media o Baja)\n"
-    #     "Ejemplo de respuesta:\n"
-    #     "{ \"sentimiento\": \"Positivo\", \"intencion_compra\": \"Alta\" }\n\n"
-    #     f"CONVERSACIÓN:\n{historial}"
-    # )
 
     prompt = ("""
             # Rol
@@ -31,9 +22,9 @@ def analizar_conversacion_con_gemini(mensajes):
         Recibirás una secuencia de mensajes escritos por un cliente (excluyendo los del hotel). Tu tarea es analizar todos esos mensajes y clasificar el comportamiento del cliente en tres categorías con base en las siguientes definiciones:
 
         - **Sentimiento general** (evaluar el tono emocional general de los mensajes del cliente):
-        - **Positivo**: Usa lenguaje cordial, muestra entusiasmo, agradecimiento o buena predisposición.
-        - **Negativo**: Muestra frustración, enojo, queja o descontento.
-        - **Neutral**: Lenguaje objetivo o factual, sin carga emocional clara.
+        - **Contento**: Usa lenguaje cordial, muestra entusiasmo, agradecimiento o buena predisposición.
+        - **Enojado**: Muestra frustración, enojo, queja o descontento.
+        - **Neutro**: Lenguaje objetivo o factual, sin carga emocional clara.
 
         - **Intención de compra** (evaluar si el cliente quiere hacer una reserva):
         - **Alta**: El cliente expresa intención directa de reservar o pide precio/disponibilidad con fechas concretas.
