@@ -14,11 +14,13 @@ class AnalizarChatView(APIView):
         serializer = EntradaChatSerializer(data=request.data)
         if serializer.is_valid():
             mensajes = serializer.validated_data['mensajes']
+            id_context = serializer.validated_data.get('id_context')
             try:
                 resultado = analizar_conversacion_con_gemini(mensajes)
             except Exception as e:
                 return Response({"error": str(e)}, status=500)
             conversacion = ConversacionAnalizada.objects.create(
+                id_context=id_context,
                 mensajes=mensajes,
                 sentimiento=resultado.get("sentimiento", "Neutral"),
                 intencion_compra=resultado.get("intencion_compra", "Media"),
@@ -27,3 +29,24 @@ class AnalizarChatView(APIView):
             salida_serializer = ConversacionAnalizadaSerializer(conversacion)
             return Response(salida_serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+
+class ObtenerConversacionView(APIView):
+    def get(self, request, id_context):
+        try:
+            conversaciones = ConversacionAnalizada.objects.filter(id_context=id_context).order_by('-creado_en')
+            if not conversaciones.exists():
+                return Response(
+                    {"error": f"No se encontraron conversaciones con id_context: {id_context}"}, 
+                    status=404
+                )
+            serializer = ConversacionAnalizadaSerializer(conversaciones, many=True)
+            return Response(serializer.data, status=200)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+            return Response(
+                {"error": f"No se encontró conversación con id_context: {id_context}"},
+                status=404
+            )
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)

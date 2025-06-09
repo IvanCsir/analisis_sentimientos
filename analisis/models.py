@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 
 class ConversacionAnalizada(models.Model):
+    id_context = models.CharField(max_length=100, null=True, blank=True)  # ID del contexto de la conversación
     mensajes = models.JSONField()
     sentimiento = models.CharField(max_length=12)  #Contento, Enojado, Neutro
     intencion_compra = models.CharField(max_length=8)  # Alta, Media, Baja
