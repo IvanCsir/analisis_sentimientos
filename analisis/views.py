@@ -3,9 +3,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .serializers import EntradaChatSerializer, ConversacionAnalizadaSerializer
+from .serializers import EntradaChatSerializer, ConversacionAnalizadaSerializer, SugerenciaRecepcionistaSerializer
 from .models import ConversacionAnalizada
-from .services.servicio_gemini import analizar_conversacion_con_gemini
+from .services.servicio_gemini import analizar_conversacion_con_gemini, sugerir_acciones_recepcionista_multiples
 
 
 # Create your views here.
@@ -50,3 +50,17 @@ class ObtenerConversacionView(APIView):
             )
         except Exception as e:
             return Response({"error": str(e)}, status=500)
+
+
+class SugerirAccionesRecepcionistaView(APIView):
+    def post(self, request):
+        serializer = SugerenciaRecepcionistaSerializer(data=request.data)
+        if serializer.is_valid():
+            conversaciones = serializer.validated_data['conversaciones']
+            
+            try:
+                resultado = sugerir_acciones_recepcionista_multiples(conversaciones)
+                return Response(resultado, status=200)
+            except Exception as e:
+                return Response({"error": str(e)}, status=500)
+        return Response(serializer.errors, status=400)

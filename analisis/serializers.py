@@ -12,3 +12,11 @@ class ConversacionAnalizadaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ConversacionAnalizada
         fields = '__all__'
+
+
+class SugerenciaRecepcionistaSerializer(serializers.Serializer):
+    # Para múltiples conversaciones, usamos una lista de objetos de análisis
+    conversaciones = serializers.ListField(
+        child=serializers.DictField(),
+        allow_empty=False
+    )
