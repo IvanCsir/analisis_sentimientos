@@ -65,7 +65,7 @@ def analizar_conversacion_con_gemini(mensajes):
         """ + f"\n{historial}"
     )
     print("Historial de mensajes:", historial)
-    print("Prompt completo:", prompt)
+    #print("Prompt completo:", prompt)
     data = {
         "contents": [
             {
