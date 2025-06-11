@@ -64,3 +64,25 @@ class SugerirAccionesRecepcionistaView(APIView):
             except Exception as e:
                 return Response({"error": str(e)}, status=500)
         return Response(serializer.errors, status=400)
+
+
+class SugerirAccionesPorContextoView(APIView):
+    def get(self, request, id_context):
+        try:
+            # Obtener todas las conversaciones para este id_context
+            conversaciones = ConversacionAnalizada.objects.filter(id_context=id_context).order_by('-creado_en')
+            if not conversaciones.exists():
+                return Response(
+                    {"error": f"No se encontraron conversaciones con id_context: {id_context}"}, 
+                    status=404
+                )
+            
+            # Serializar las conversaciones para pasarlas al servicio
+            conversaciones_data = ConversacionAnalizadaSerializer(conversaciones, many=True).data
+            
+            # Generar sugerencias basadas en todas las conversaciones
+            resultado = sugerir_acciones_recepcionista_multiples(conversaciones_data)
+            return Response(resultado, status=200)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
