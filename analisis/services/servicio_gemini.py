@@ -55,7 +55,7 @@ def analizar_conversacion_con_gemini(mensajes):
         ### Respuesta esperada:
         ```json
         {
-        "sentimiento": "Positivo",
+        "sentimiento": "Contento",
         "intencion_compra": "Alta",
         "urgencia": "Alta"
         }
