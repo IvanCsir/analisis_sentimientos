@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,9 +7,11 @@ from rest_framework import status
 from .serializers import EntradaChatSerializer, ConversacionAnalizadaSerializer, SugerenciaRecepcionistaSerializer
 from .models import ConversacionAnalizada
 from .services.servicio_gemini import analizar_conversacion_con_gemini, sugerir_acciones_recepcionista_multiples
+from .auth_decorator import require_api_key
 
 
 # Create your views here.
+@method_decorator(require_api_key, name='post')
 class AnalizarChatView(APIView):
     def post(self, request):
         serializer = EntradaChatSerializer(data=request.data)
@@ -31,6 +34,7 @@ class AnalizarChatView(APIView):
         return Response(serializer.errors, status=400)
 
 
+@method_decorator(require_api_key, name='get')
 class ObtenerConversacionView(APIView):
     def get(self, request, id_context):
         try:
@@ -52,6 +56,7 @@ class ObtenerConversacionView(APIView):
             return Response({"error": str(e)}, status=500)
 
 
+@method_decorator(require_api_key, name='post')
 class SugerirAccionesRecepcionistaView(APIView):
     def post(self, request):
         serializer = SugerenciaRecepcionistaSerializer(data=request.data)
@@ -66,6 +71,7 @@ class SugerirAccionesRecepcionistaView(APIView):
         return Response(serializer.errors, status=400)
 
 
+@method_decorator(require_api_key, name='get')
 class SugerirAccionesPorContextoView(APIView):
     def get(self, request, id_context):
         try:
