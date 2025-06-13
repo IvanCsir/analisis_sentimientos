@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&rx!!*1xfz72%265us^lwvn2=^t5+8u5_h4&$)apq-kucyp2uf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["analisis-sentimientos-zsgq.onrender.com", "localhost", "0.0.0.0", "https://chat-beta.pxsol.io/", "localhost:8081"]
+ALLOWED_HOSTS = ["analisis-sentimientos-zsgq.onrender.com", "localhost", "0.0.0.0", "https://chat-beta.pxsol.io/", "http://localhost:8081"]
 
 # Application definition
 
